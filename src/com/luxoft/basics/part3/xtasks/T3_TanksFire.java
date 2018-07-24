@@ -20,8 +20,8 @@ public class T3_TanksFire extends JPanel
     int tankX = 128;
     int tankY = 512;
 
-    int bulletX = -100;
-    int bulletY = -100;
+    int bulletX = tankX + 25;
+    int bulletY = tankY;
 
     int tankSpeed = 10;
     int bulletSpeed = 5;
@@ -63,7 +63,13 @@ public class T3_TanksFire extends JPanel
      */
     void fire()
     {
-        // TODO YOUR CODE HERE
+        bulletY = tankY;
+        while (bulletY > 0){
+            bulletY -= bulletSpeed;
+            repaint();
+            sleep(20);
+        }
+
     }
 
     private void printCurrentBattleField()
