@@ -25,7 +25,7 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
 
     boolean isValidInput(String input){
         return (input.length() == 2 &&
-                input.substring(0,1).matches("[a-jA-J]") &&
+                input.substring(0,1).matches("[a-iA-I]") &&
                 input.substring(1).matches("[1-9]")
         );
     }
@@ -65,11 +65,11 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
 
     void moveToQuadrant(String quadrant)
     {
-        int destY = 64 * (Integer.parseInt(quadrant.substring(1))-1);
-        int destX = 64 * "abcdefghij".indexOf(quadrant.charAt(0));
+        int destY = (Integer.parseInt(quadrant.substring(1))-1);
+        int destX = "abcdefghi".indexOf(quadrant.charAt(0));
 
-        int stepsX = (destX - tankX) / 64;
-        int stepsY = (destY - tankY) / 64;
+        int stepsX = destX - tankX / 64;
+        int stepsY = destY - tankY / 64;
 
         for (int stx = 0; stx < Math.abs(stepsX); stx++){
             if (stepsX > 0) {
