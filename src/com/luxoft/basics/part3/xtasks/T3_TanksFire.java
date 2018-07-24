@@ -48,6 +48,7 @@ public class T3_TanksFire extends JPanel
         while (true)
         {
             fire();
+
         }
     }
 
@@ -68,6 +69,7 @@ public class T3_TanksFire extends JPanel
             bulletY -= bulletSpeed;
             repaint();
             sleep(20);
+            tankY--;
         }
 
     }

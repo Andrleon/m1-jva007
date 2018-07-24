@@ -6,7 +6,7 @@ public class T1_Sort
 {
     public static void main(String[] args) throws Exception
     {
-        int[] numbers = {0, 3, 2, 1, 6, 8, 4, 7, 5, 9};
+        int[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 9, 8};
 
         System.out.println(Arrays.toString(numbers));
         System.out.println();
@@ -24,15 +24,21 @@ public class T1_Sort
      */
     public static void sortAsc(int[] data)
     {
-        for (int i = 0; i < data.length; i++){
-            for (int j = i; j < data.length - 1; j ++){
-                if (data[j] > data[j + 1]) {
-                    swap(data, j, j + 1);
-                }
-            }
+      int n = data.length;
+      int newn;
+      while (n !=0) {
+          newn = 0;
+          for (int i = 1; i <= n - 1; i++) {
+              System.out.println("iter " + i);
+              if (data[i - 1] > data[i]) {
+                  System.out.println(data[i-1] + " swapped with " + data[i]);
+                  swap(data, i - 1, i);
+                  newn = i;
+              }
+          }
+          n = newn;
+      }
 
-        }
-        System.out.println(Arrays.toString(data));
     }
 
     /**
