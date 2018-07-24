@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class E1_ArrayReadWrite
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws InterruptedException {
         int[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         System.out.println(Arrays.toString(numbers));
@@ -20,9 +19,9 @@ public class E1_ArrayReadWrite
         num = numbers[7];
         System.out.println("elem at 7 --> " + num);
 
-//        Thread.sleep(100); // just for clear output, ignore this for now
-//        num = numbers[23]; // will throw runtime exception
-//        System.out.println("elem at 23 --> " + num);
+        Thread.sleep(100); // just for clear output, ignore this for now
+        num = numbers[23]; // will throw runtime exception
+        System.out.println("elem at 23 --> " + num);
 
         System.out.println();
         System.out.println("Now let's replace some elements.");

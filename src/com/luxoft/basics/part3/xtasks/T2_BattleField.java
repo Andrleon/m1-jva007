@@ -7,15 +7,15 @@ public class T2_BattleField
      * TODO PUT YOUR DESIGN HERE
      */
     String[][] battleField = {
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {" ", " ", " ", "T", "E", " ", " ", " ", " "}
+            {" ", "B", " ", "B", "B", " ", " ", " ", "B"},
+            {" ", " ", " ", "B", " ", " ", " ", " ", "B"},
+            {" ", " ", " ", " ", " ", "B", " ", " ", "B"},
+            {" ", " ", " ", " ", " ", " ", " ", "B", "B"},
+            {"B", "B", " ", " ", " ", "B", " ", " ", "B"},
+            {"B", " ", " ", " ", " ", " ", " ", " ", " "},
+            {"B", " ", "B", " ", " ", " ", "B", " ", " "},
+            {"B", " ", " ", " ", " ", " ", " ", "B", " "},
+            {"B", " ", "B", "T", "E", " ", " ", " ", " "}
     };
 
     void runTheGame() throws Exception
@@ -28,7 +28,16 @@ public class T2_BattleField
      */
     private void printCurrentBattleField()
     {
-        // TODO YOUR CODE HERE
+        for (String line[] : battleField){
+            for (String el : line) {
+                if (el.equals(" ")  )
+                    System.out.print("-");
+                else
+                    System.out.print(el);
+            }
+            System.out.println();
+        }
+
     }
 
 

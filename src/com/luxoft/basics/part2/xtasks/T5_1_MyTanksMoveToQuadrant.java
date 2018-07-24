@@ -17,7 +17,6 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
             String quad = sc.nextLine();
             if (quad.isEmpty() || !isValidInput(quad))
                 continue;
-
             else
                 moveToQuadrant(quad);
         }
