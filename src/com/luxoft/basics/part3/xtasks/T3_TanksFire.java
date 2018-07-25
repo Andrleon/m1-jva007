@@ -48,6 +48,8 @@ public class T3_TanksFire extends JPanel
         while (true)
         {
             fire();
+            if (tankY == 0)
+                tankY = 512;
 
         }
     }

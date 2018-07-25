@@ -9,7 +9,7 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
     int tankX = 256;
     int tankY = 256;
     int speed = 5;
-    enum Direction {UP, DOWN, LEFT, RIGHT};
+    enum MoveDirection {UP, DOWN, LEFT, RIGHT};
 
     void runTheGame(){
         while (true){
@@ -40,12 +40,12 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
             sleep(speed);
         }
     }
-    void move(Direction direction){
+    void move(MoveDirection moveDirection){
         int tankPosition;
         int step;
         char axisXY;
 
-        if (direction == Direction.UP || direction == Direction.DOWN){
+        if (moveDirection == MoveDirection.UP || moveDirection == MoveDirection.DOWN){
             tankPosition = tankY;
             axisXY = 'y';
         }
@@ -54,7 +54,7 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
             axisXY = 'x';
         }
 
-        step = (direction == Direction.UP || direction == Direction.LEFT) ? -1 : 1;
+        step = (moveDirection == MoveDirection.UP || moveDirection == MoveDirection.LEFT) ? -1 : 1;
 
         if ((tankPosition > 0 && step == -1) || (tankPosition < 512 && step == 1)){
             animateMove(step, axisXY);
@@ -72,16 +72,16 @@ public class T5_1_MyTanksMoveToQuadrant extends JPanel
 
         for (int stx = 0; stx < Math.abs(stepsX); stx++){
             if (stepsX > 0) {
-                move(Direction.RIGHT);
+                move(MoveDirection.RIGHT);
             }
-            else move(Direction.LEFT);
+            else move(MoveDirection.LEFT);
         }
 
         for (int sty = 0; sty < Math.abs(stepsY); sty++){
             if (stepsY > 0) {
-                move(Direction.DOWN);
+                move(MoveDirection.DOWN);
             }
-            else move(Direction.UP);
+            else move(MoveDirection.UP);
         }
     }
 

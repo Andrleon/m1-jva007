@@ -11,17 +11,17 @@ public class T4_TanksShoot extends JPanel
     final boolean COLORED_MODE = false;
     final boolean IS_GRID = true;
 
-    final int BF_WIDTH = 576;
-    final int BF_HEIGHT = 576;
+    final int BF_WIDTH = 596;
+    final int BF_HEIGHT = 596;
 
     // 1 - top, 2 - right, 3 - down, 4 - left
-    int tankDirection = 1;
+    int tankDirection = 2;
 
-    int tankX = 128;
-    int tankY = 512;
+    int tankX = 0;
+    int tankY = 0;
 
-    int bulletX = -100;
-    int bulletY = -100;
+    int bulletX = tankX + 25;
+    int bulletY = tankY + 25;
 
     int tankSpeed = 10;
     int bulletSpeed = 5;
@@ -44,7 +44,6 @@ public class T4_TanksShoot extends JPanel
     void runTheGame() throws Exception
     {
         printCurrentBattleField();
-
         while (true)
         {
             fire();
@@ -61,20 +60,75 @@ public class T4_TanksShoot extends JPanel
      * TODO When the bullet shoot something method would clean appropriate quadrant and destroy the bullet.
      * TODO Use #checkAndProcessInterception() to check if you already shoot something.
      */
-    void fire()
-    {
-        // TODO SHOULD BE UPDATED
+
+    void fire(){
+        int[] bulQuadrant = new int[2];
+        int bulletPosition;
+        char bulAxisXY;
+        int step;
+
+        // initial position of the bullet
+        bulletY = tankY + 25;
+        bulletX = tankX + 25;
+
+        // bullet AxisXY
+        if (tankDirection == 1 || tankDirection == 3){
+            bulletPosition = bulletY;
+            bulAxisXY = 'y';
+        }
+        else {
+            bulletPosition = bulletX;
+            bulAxisXY = 'x';
+        }
+        System.out.println("Asix = " + bulAxisXY);
+        System.out.println("position = " + bulletPosition);
+
+        // bullet flight direction:
+        //  1 : right/down;
+        // -1 : left/up
+        if (tankDirection == 3 || tankDirection == 2)
+            step = 1;
+        else step = -1;
+        System.out.println("step = " + step);
+
+        // bullet's flight
+        while ((bulletPosition > 32 && step == -1) || (bulletPosition < 537 && step == 1)){
+            for (int i = 0; i < 64; i++){
+                if (bulAxisXY == 'x') {
+                    bulletX += step;
+                    bulletPosition = bulletX;
+                }
+                else if (bulAxisXY == 'y') {
+                    bulletY += step;
+                    bulletPosition = bulletY;
+                }
+                else break;
+                repaint();
+                sleep(2);
+            }
+            bulQuadrant = getQuadrant(bulletX, bulletY);
+
+            // destruction of the brick
+            if (checkAndProcessInterception(bulQuadrant[0],bulQuadrant[1])){
+                battleField[bulQuadrant[1]][bulQuadrant[0]] = BLANK;
+                printCurrentBattleField();
+                break;
+            }
+        }
     }
+
+
+
+
 
     /**
      *
      * Should return true if bullet located in non-empty quadrant.
      *
      */
-    boolean checkAndProcessInterception()
+    boolean checkAndProcessInterception(int x, int y)
     {
-        // TODO YOUR CODE HERE
-        return false;
+        return (battleField[y][x].equals(BRICK));
     }
 
     private void printCurrentBattleField()
@@ -224,6 +278,7 @@ public class T4_TanksShoot extends JPanel
 
     private String getQuadrantXY(int v, int h)
     {
+
         return (v - 1) * 64 + "_" + (h - 1) * 64;
     }
 
