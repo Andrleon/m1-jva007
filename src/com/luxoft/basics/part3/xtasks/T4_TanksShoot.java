@@ -80,8 +80,6 @@ public class T4_TanksShoot extends JPanel
             bulletPosition = bulletX;
             bulAxisXY = 'x';
         }
-        System.out.println("Asix = " + bulAxisXY);
-        System.out.println("position = " + bulletPosition);
 
         // bullet flight direction:
         //  1 : right/down;
@@ -92,23 +90,22 @@ public class T4_TanksShoot extends JPanel
         System.out.println("step = " + step);
 
         // bullet's flight
-        while ((bulletPosition > 32 && step == -1) || (bulletPosition < 537 && step == 1)){
-            for (int i = 0; i < 64; i++){
-                if (bulAxisXY == 'x') {
-                    bulletX += step;
-                    bulletPosition = bulletX;
-                }
-                else if (bulAxisXY == 'y') {
-                    bulletY += step;
-                    bulletPosition = bulletY;
-                }
-                else break;
-                repaint();
-                sleep(2);
+        while ((bulletPosition > 32 && step == -1) || (bulletPosition < 575 && step == 1)){
+            if (bulAxisXY == 'x') {
+                bulletX += step;
+                bulletPosition = bulletX;
             }
-            bulQuadrant = getQuadrant(bulletX, bulletY);
+            else if (bulAxisXY == 'y') {
+                bulletY += step;
+                bulletPosition = bulletY;
+            }
+            else break;
+
+            repaint();
+            sleep(2);
 
             // destruction of the brick
+            bulQuadrant = getQuadrant(bulletX, bulletY);
             if (checkAndProcessInterception(bulQuadrant[0],bulQuadrant[1])){
                 battleField[bulQuadrant[1]][bulQuadrant[0]] = BLANK;
                 printCurrentBattleField();
