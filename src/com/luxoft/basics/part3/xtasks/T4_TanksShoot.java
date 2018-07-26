@@ -2,6 +2,7 @@ package com.luxoft.basics.part3.xtasks;
 
 
 import javax.swing.*;
+import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.util.Arrays;
 
@@ -15,16 +16,18 @@ public class T4_TanksShoot extends JPanel
     final int BF_HEIGHT = 596;
 
     // 1 - top, 2 - right, 3 - down, 4 - left
-    int tankDirection = 2;
+    int tankDirection = 3;
 
-    int tankX = 0;
-    int tankY = 0;
+    int tankX = 256;
+    int tankY = 256;
 
     int bulletX = tankX + 25;
     int bulletY = tankY + 25;
 
-    int tankSpeed = 10;
-    int bulletSpeed = 5;
+    int tankSpeed = 2;
+    int bulletSpeed = 1;
+
+    boolean cleanLine = false;
 
     final String BRICK = "B";
     final String BLANK = " ";
@@ -44,10 +47,7 @@ public class T4_TanksShoot extends JPanel
     void runTheGame() throws Exception
     {
         printCurrentBattleField();
-        while (true)
-        {
-            fire();
-        }
+            clean();
     }
 
     /**
@@ -60,7 +60,6 @@ public class T4_TanksShoot extends JPanel
      * TODO When the bullet shoot something method would clean appropriate quadrant and destroy the bullet.
      * TODO Use #checkAndProcessInterception() to check if you already shoot something.
      */
-
     void fire(){
         int[] bulQuadrant = new int[2];
         int bulletPosition;
@@ -81,19 +80,17 @@ public class T4_TanksShoot extends JPanel
             bulAxisXY = 'x';
         }
 
-        // bullet flight direction:
+        // bullet's flight direction:
         //  1 : right/down;
         // -1 : left/up
-        if (tankDirection == 3 || tankDirection == 2)
-            step = 1;
-        else step = -1;
-        System.out.println("step = " + step);
+        step = (tankDirection == 3 || tankDirection == 2) ? 1 : -1;
 
-        // bullet's flight
-        while ((bulletPosition > 32 && step == -1) || (bulletPosition < 575 && step == 1)){
+        // bullet's flight animation
+        while ( ((bulletPosition > 32 && step == -1) || (bulletPosition < 575 && step == 1)) && !cleanLine){
             if (bulAxisXY == 'x') {
                 bulletX += step;
                 bulletPosition = bulletX;
+
             }
             else if (bulAxisXY == 'y') {
                 bulletY += step;
@@ -101,8 +98,10 @@ public class T4_TanksShoot extends JPanel
             }
             else break;
 
+            if ((bulletPosition == 32 && step == -1) || (bulletPosition == 575 && step == 1))
+                cleanLine = true;
             repaint();
-            sleep(2);
+            sleep(bulletSpeed);
 
             // destruction of the brick
             bulQuadrant = getQuadrant(bulletX, bulletY);
@@ -114,6 +113,56 @@ public class T4_TanksShoot extends JPanel
         }
     }
 
+    void clean()
+    {
+    //-------------------------
+        turn(1);
+    //-------------------------
+        if (tankY == 0)
+            cleanLine = true;
+        while (!cleanLine){
+        fire();
+        }
+    //-------------------------
+        while (tankY > 0) {
+            move(1);
+        }
+    //-------------------------
+        turn(4);
+    //-------------------------
+            cleanLine = false;
+    //-------------------------
+        if (tankX == 0)
+            cleanLine = true;
+        while (!cleanLine){
+            fire();
+        }
+    //-------------------------
+
+        while (tankX > 0) {
+            move(tankDirection);
+        }
+    //-------------------------
+        for (int i = 0; i <9; i++) {
+    //-------------------------
+            turn(2);
+    //-------------------------
+            cleanLine = false;
+    //-------------------------
+            while (!cleanLine) {
+                fire();
+            }
+    //-------------------------
+            turn(3);
+            cleanLine = false;
+    //-------------------------
+            fire();
+    //-------------------------
+            move(3);
+    //-------------------------
+            cleanLine = false;
+        }
+    }
 
 
 
@@ -141,9 +190,36 @@ public class T4_TanksShoot extends JPanel
         return new int[] {x / 64, y / 64};
     }
 
-    void move(int direction)
-    {
-        // TODO SHOULD BE ALREADY IMPLEMENTED
+    void move(int direction){
+        int tankPosition;
+        int step;
+        char tankAxisXY;
+        bulletX = -100;
+        bulletY = -100;
+        turn(direction);
+
+
+        if (direction == 1 || direction == 3){
+            tankPosition = tankY;
+            tankAxisXY = 'y';
+        }
+        else {
+            tankPosition = tankX;
+            tankAxisXY = 'x';
+        }
+        step = (direction == 3 || direction == 2) ? 1 : -1;
+
+        if ((tankPosition > 0 && step == -1) || (tankPosition < 512 && step == 1)){
+            for (int i = 0; i < 64; i++){
+                if (tankAxisXY == 'x')
+                    tankX += step;
+                else if (tankAxisXY == 'y')
+                    tankY += step;
+                else break;
+                repaint();
+                sleep(tankSpeed);
+            }
+        }
     }
 
     void turn(int direction)
