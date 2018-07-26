@@ -10,7 +10,7 @@ public class T4_TanksShoot extends JPanel
 {
 
     final boolean COLORED_MODE = false;
-    final boolean IS_GRID = true;
+    final boolean IS_GRID = false;
 
     final int BF_WIDTH = 596;
     final int BF_HEIGHT = 596;
@@ -28,6 +28,7 @@ public class T4_TanksShoot extends JPanel
     int bulletSpeed = 1;
 
     boolean cleanLine = false;
+    boolean cleanField = false;
 
     final String BRICK = "B";
     final String BLANK = " ";
@@ -162,6 +163,8 @@ public class T4_TanksShoot extends JPanel
     //-------------------------
             cleanLine = false;
         }
+        cleanField = true;
+        repaint();
     }
 
 
@@ -269,6 +272,21 @@ public class T4_TanksShoot extends JPanel
 
         g.setColor(new Color(255, 0, 0));
         g.fillRect(tankX, tankY, 64, 64);
+
+        if (cleanField) {
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.setColor(new Color(0, 0, 0));
+            g.drawString("G", 40, 255);
+            g.drawString("O", 64 + 40, 255);
+            g.drawString("O", 2 * 64 + 40, 255);
+            g.drawString("D", 3 * 64 + 40, 255);
+            g.drawString(" ", 4 * 64 + 40, 255);
+            g.drawString("J", 5 * 64 + 40, 255);
+            g.drawString("O", 6 * 64 + 40, 255);
+            g.drawString("B", 7 * 64 + 40, 255);
+            g.drawString("!", 8 * 64 + 40, 255);
+
+        }
 
         g.setColor(new Color(0, 255, 0));
         if (tankDirection == 1)
