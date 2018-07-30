@@ -22,6 +22,8 @@ public class Sort {
         System.out.println(Arrays.toString(q));
     }
 
+
+
     public static int[] sort(int[] a){
       int temp;
       int l = a.length;
